@@ -20,7 +20,6 @@ export default function ChatAssistant() {
     const data = await response.json();
 
     setMessages([...newMessages, { text: data.reply, sender: 'bot' }]);
-    setUserInput('');
   };
 
   return (
