@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
-function App() {
-  const [input, setInput] = useState('');
+export default function ChatAssistant() {
+  const [userInput, setUserInput] = useState('');
   const [messages, setMessages] = useState([]);
 
-  const sendMessage = async () => {
-    if (!input.trim()) return;
+  const handleSend = async () => {
+    if (!userInput.trim()) return;
 
-    const newMessages = [...messages, { text: input, sender: 'user' }];
+    const newMessages = [...messages, { text: userInput, sender: 'user' }];
     setMessages(newMessages);
-    setInput('');
+    setUserInput('');
 
     const response = await fetch('/api/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: input }),
+      body: JSON.stringify({ prompt: userInput }),
     });
 
     const data = await response.json();
@@ -23,33 +23,27 @@ function App() {
   };
 
   return (
-    <div className="max-w-xl mx-auto my-10 border border-gray-200 rounded-xl shadow-md">
-      <div className="bg-gray-800 text-white p-4 rounded-t-lg text-center font-bold">
-        ForceOne IT - Assistente AWS
-      </div>
-
-      <div className="h-[400px] overflow-auto p-4 bg-gray-50">
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">ForceOne IT Assistente AWS</h1>
+      <div className="shadow-xl h-96 overflow-auto p-4 space-y-2 bg-gray-100 rounded-lg">
         {messages.map((msg, index) => (
           <div
             key={index}
-            className={`my-2 flex ${msg.sender === 'bot' ? 'justify-start' : 'justify-end'}`}
+            className={`p-2 rounded-lg ${
+              msg.sender === 'bot' ? 'bg-blue-100' : 'bg-gray-200'
+            }`}
           >
-            <div
-              className={`inline-block max-w-[80%] p-2 rounded-lg shadow ${
-                msg.sender === 'bot' ? 'bg-blue-100' : 'bg-green-100'
-              }`}
-            >
-              {msg.text}
-            </div>
-          ))}
+            {msg.text}
+          </div>
+        ))}
       </div>
-
-      <div className="flex gap-2 p-4 bg-gray-100 rounded-b-lg">
+      <div className="flex mt-4 gap-2">
         <input
-          className="flex-grow border border-gray-300 rounded-lg p-2"
-          placeholder="Digite sua mensagem aqui..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
+          type="text"
+          value={userInput}
+          onChange={(e) => setUserInput(e.target.value)}
+          placeholder="Digite sua mensagem..."
+          className="flex-grow border border-gray-300 p-2 rounded-lg"
         />
         <button
           onClick={handleSend}
@@ -61,5 +55,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
