@@ -25,6 +25,7 @@ export default function ChatAssistant() {
   return (
     <div className="max-w-2xl mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">ForceOne IT Assistente AWS</h1>
+
       <div className="shadow-xl h-96 overflow-auto p-4 space-y-2 bg-gray-100 rounded-lg">
         {messages.map((msg, index) => (
           <div
@@ -37,6 +38,7 @@ export default function ChatAssistant() {
           </div>
         ))}
       </div>
+
       <div className="flex mt-4 gap-2">
         <input
           type="text"
@@ -45,6 +47,7 @@ export default function ChatAssistant() {
           placeholder="Digite sua mensagem..."
           className="flex-grow border border-gray-300 p-2 rounded-lg"
         />
+
         <button
           onClick={handleSend}
           className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
